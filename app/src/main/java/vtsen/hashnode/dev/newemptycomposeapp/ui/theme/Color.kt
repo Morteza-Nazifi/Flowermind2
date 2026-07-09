@@ -82,7 +82,6 @@ val md_theme_dark_scrim = Color(0xFF000000)
 
 val seed = Color(0xFF6750A4)
 
-
 // ======================================================
 // FlowerMind2 Custom Colors
 // ======================================================
@@ -103,4 +102,4 @@ val FlowerCenter = Color.White
 val FlowerBackground = Color(0xFFF8F9FA)
 
 val PetalStroke = Color(0xFF444444)
-val SelectedPetal = Color(0xFFlowerMind2ckgroundckground
+val SelectedPetal = Color
