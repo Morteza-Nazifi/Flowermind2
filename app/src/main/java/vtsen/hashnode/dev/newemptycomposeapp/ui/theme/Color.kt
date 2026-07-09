@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package vtsen.hashnode.dev.newemptycomposeapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -80,3 +81,26 @@ val md_theme_dark_outlineVariant = Color(0xFF49454F)
 val md_theme_dark_scrim = Color(0xFF000000)
 
 val seed = Color(0xFF6750A4)
+
+
+// ======================================================
+// FlowerMind2 Custom Colors
+// ======================================================
+
+val SelfPetal = Color(0xFFE91E63)
+val OtherPetal = Color(0xFFE91E63)
+
+val ControlPetal = Color(0xFFFF9800)
+val AutomaticPetal = Color(0xFFFF9800)
+
+val InnerMindPetal = Color(0xFF4CAF50)
+val OuterMindPetal = Color(0xFF4CAF50)
+
+val EmotionPetal = Color(0xFF3F51B5)
+val CognitionPetal = Color(0xFF3F51B5)
+
+val FlowerCenter = Color.White
+val FlowerBackground = Color(0xFFF8F9FA)
+
+val PetalStroke = Color(0xFF444444)
+val SelectedPetal = Color(0xFFlowerMind2ckgroundckground
