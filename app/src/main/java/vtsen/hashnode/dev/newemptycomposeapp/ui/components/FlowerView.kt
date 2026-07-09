@@ -13,8 +13,6 @@ fun FlowerView() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-
         FlowerCanvas()
-
     }
 }
