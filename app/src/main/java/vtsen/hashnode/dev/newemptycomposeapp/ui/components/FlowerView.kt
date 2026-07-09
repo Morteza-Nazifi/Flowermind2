@@ -24,7 +24,7 @@ fun FlowerView() {
 
         petals.forEachIndexed { index, petal ->
 
-            val indexionZicsLayert = Math.toRadians((index * 45.0) - 90.0)
+            val angle = Math.toRadians((index * 45.0) - 90.0)
 
             val x = (cos(angle) * radius).dp
 
@@ -38,7 +38,7 @@ fun FlowerView() {
                     }
             ) {
 
-                petal(
+                PetalItem(
                     petal = petal,
                     modifier = Modifier.size(
                         width = 96.dp,
@@ -51,5 +51,4 @@ fun FlowerView() {
         }
 
     }
-
 }
