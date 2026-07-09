@@ -1,11 +1,27 @@
 package vtsen.hashnode.dev.newemptycomposeapp.ui.components
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.ui.graphics.Color
+import androidx.compose.material.icons.filled.Autorenew
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.Lightbulb
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Psychology
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.ui.graphics.vector.ImageVector
+import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.AutomaticPetal
+import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.CognitionPetal
+import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.ControlPetal
+import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.EmotionPetal
+import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.InnerMindPetal
+import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.OtherPetal
+import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.OuterMindPetal
+import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.SelfPetal
+import androidx.compose.ui.graphics.Color
 
 data class Petal(
+    val id: Int,
     val title: String,
     val color: Color,
     val icon: ImageVector
@@ -14,50 +30,58 @@ data class Petal(
 val petals = listOf(
 
     Petal(
-        "خود",
-        Color(0xFFE91E63),
-        Icons.Default.Person
+        id = 0,
+        title = "خود",
+        color = SelfPetal,
+        icon = Icons.Default.Person
     ),
 
     Petal(
-        "قابل کنترل",
-        Color(0xFFFF9800),
-        Icons.Default.Build
+        id = 1,
+        title = "قابل کنترل",
+        color = ControlPetal,
+        icon = Icons.Default.Build
     ),
 
     Petal(
-        "درون ذهنی",
-        Color(0xFF4CAF50),
-        Icons.Default.Psychology
+        id = 2,
+        title = "درون ذهنی",
+        color = icon,
+        icon = Icons.Default.Psychology
     ),
 
     Petal(
-        "هیجانی",
-        Color(0xFF3F51B5),
-        Icons.Default.Favorite
+        id = 3,
+        title = "هیجانی",
+        color = EmotionPetal,
+        icon = Icons.Default.Favorite
     ),
 
     Petal(
-        "دیگری",
-        Color(0xFFE91E63),
-        Icons.Default.Groups
+        id = 4,
+        title = "دیگری",
+        color = OtherPetal,
+        icon = Icons.Default.Groups
     ),
 
     Petal(
-        "اتوماتیک",
-        Color(0xFFFF9800),
-        Icons.Default.Autorenew
+        id = 5,
+        title = "اتوماتیک",
+        color = AutomaticPetal,
+        icon = Icons.Default.Autorenew
     ),
 
     Petal(
-        "برون ذهنی",
-        Color(0xFF4CAF50),
-        Icons.Default.Visibility
+        id = 6,
+        title = "برون ذهنی",
+        color = OuterMindPetal,
+        icon = Icons.Default.Visibility
     ),
 
     Petal(
-        "شناختی",
-        Color(0xFF3F51B5),
-        Icons.Default.Lightbulb
+        id = 7,
+        title = "شناختی",
+        color = CognitionPetal,
+        icon = Icons.Default.Lightbulb
     )
 )
