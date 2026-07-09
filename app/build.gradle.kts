@@ -16,6 +16,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -24,24 +25,31 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlin {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+            jvmTarget.set(
+                org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+            )
         }
     }
+
     buildFeatures {
         compose = true
     }
+
     packaging {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
@@ -50,6 +58,7 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
 
     implementation(libs.bundles.androidx.lifeycle)
@@ -57,6 +66,8 @@ dependencies {
     implementation(libs.androidx.activity.compose)
 
     implementation(libs.bundles.compose.ui)
+
+    implementation(libs.androidx.compose.material.icons.extended)
 
     implementation(libs.accompanist.systemuicontroller)
 
