@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.AutomaticPetal
 import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.CognitionPetal
@@ -18,7 +19,6 @@ import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.InnerMindPetal
 import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.OtherPetal
 import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.OuterMindPetal
 import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.SelfPetal
-import androidx.compose.ui.graphics.Color
 
 data class Petal(
     val id: Int,
@@ -46,7 +46,7 @@ val petals = listOf(
     Petal(
         id = 2,
         title = "درون ذهنی",
-        color = icon,
+        color = InnerMindPetal,
         icon = Icons.Default.Psychology
     ),
 
