@@ -20,7 +20,7 @@ fun FlowerView() {
         contentAlignment = Alignment.Center
     ) {
 
-        // مرکز گل
+        // رسم گل پس‌زمینه
         FlowerCanvas()
 
         val radius = 135f
@@ -42,7 +42,7 @@ fun FlowerView() {
 
                 PetalItem(
                     petal = petal,
-                    PetalItem = Modifier.size(
+                    modifier = Modifier.size(
                         width = 96.dp,
                         height = 170.dp
                     )
