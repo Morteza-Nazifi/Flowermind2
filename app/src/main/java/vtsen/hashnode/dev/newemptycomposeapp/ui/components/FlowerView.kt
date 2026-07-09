@@ -20,14 +20,16 @@ fun FlowerView() {
         contentAlignment = Alignment.Center
     ) {
 
+        // مرکز گل
+        FlowerCanvas()
+
         val radius = 135f
 
         petals.forEachIndexed { index, petal ->
 
-            val angle = Math.toRadians((index * 45.0) - 90.0)
+            val angle = Math.toRadians(index * 45.0 - 90.0)
 
             val x = (cos(angle) * radius).dp
-
             val y = (sin(angle) * radius).dp
 
             Box(
@@ -40,15 +42,13 @@ fun FlowerView() {
 
                 PetalItem(
                     petal = petal,
-                    modifier = Modifier.size(
+                    PetalItem = Modifier.size(
                         width = 96.dp,
                         height = 170.dp
                     )
                 )
 
             }
-
         }
-
     }
 }
