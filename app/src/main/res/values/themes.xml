@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- تم اصلی برنامه -->
+
     <style
-        name="Theme.FlowerMind.Splash"
+        name="Theme.App"
+        parent="Theme.Material3.DayNight.NoActionBar" />
+
+    <!-- Theme مورد استفاده هنگام شروع برنامه -->
+
+    <style
+        name="Theme.App.Starting"
         parent="Theme.SplashScreen">
 
-        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenBackground">
+            @color/splash_background
+        </item>
 
         <item name="windowSplashScreenAnimatedIcon">
             @drawable/splash_logo
