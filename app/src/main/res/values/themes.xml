@@ -1,9 +1,7 @@
 <style name="Theme.FlowerMind.Splash"
     parent="Theme.SplashScreen">
 
-    <item name="windowSplashScreenBackground">
-        #0B5E66
-    </item>
+    <item name="windowSplashScreenBackground">@color/splash_background</item>
 
     <item name="windowSplashScreenAnimatedIcon">
         @drawable/splash_logo
