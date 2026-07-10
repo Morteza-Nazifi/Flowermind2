@@ -103,6 +103,12 @@ fun PetalItem(
         else
             petal.color
 
+    val contentColor =
+        if (selected)
+            Color.Black
+        else
+            Color.White
+
     Surface(
 
         modifier = modifier
@@ -159,12 +165,12 @@ fun PetalItem(
             Icon(
                 imageVector = petal.icon,
                 contentDescription = petal.title,
-                tint = Color.White
+                tint = contentColor
             )
 
             Text(
                 text = petal.title,
-                color = Color.White,
+                color = contentColor,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
