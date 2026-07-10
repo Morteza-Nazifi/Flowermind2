@@ -1,8 +1,13 @@
 package vtsen.hashnode.dev.newemptycomposeapp.ui.components
 
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -10,7 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -23,21 +28,44 @@ import kotlin.math.sin
 @Composable
 fun FlowerView() {
 
-    var bloom by remember {
-        mutableFloatStateOf(0f)
+    var opened by remember {
+        mutableStateOf(false)
     }
 
     LaunchedEffect(Unit) {
-        bloom = 1f
+        opened = true
     }
 
-    val progress by animateFloatAsState(
-        targetValue = bloom,
-        animationSpec = tween(
-            durationMillis = 1400,
-            easing = FastOutSlowInEasing
+    val transition = updateTransition(
+        targetState = opened,
+        label = "flowerOpening"
+    )
+
+    val openingProgress by transition.animateFloat(
+        transitionSpec = {
+            tween(
+                durationMillis = 1800,
+                easing = FastOutSlowInEasing
+            )
+        },
+        label = "openingProgress"
+    ) { isOpened ->
+        if (isOpened) 1f else 0f
+    }
+
+    val breathing by rememberInfiniteTransition(
+        label = "breathing"
+    ).animateFloat(
+        initialValue = 0.97f,
+        targetValue = 1.03f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 3000,
+                easing = FastOutSlowInEasing
+            ),
+            repeatMode = RepeatMode.Reverse
         ),
-        label = "BloomAnimation"
+        label = "breathing"
     )
 
     Box(
@@ -45,9 +73,10 @@ fun FlowerView() {
         contentAlignment = Alignment.Center
     ) {
 
+        // مرکز گل
         FlowerCanvas()
 
-        val radius = 135f * progress
+        val radius = 135f * openingProgress
 
         petals.forEachIndexed { index, petal ->
 
@@ -60,12 +89,11 @@ fun FlowerView() {
                 modifier = Modifier
                     .offset(x = x, y = y)
                     .graphicsLayer {
+
                         rotationZ = index * 45f
 
-                        scaleX = 0.25f + progress * 0.75f
-                        scaleY = 0.25f + progress * 0.75f
-
-                        alpha = progress
+                        scaleX = openingProgress * breathing
+                        scaleY = openingProgress * breathing
                     }
             ) {
 
@@ -76,7 +104,6 @@ fun FlowerView() {
                         height = 170.dp
                     )
                 )
-
             }
         }
     }
