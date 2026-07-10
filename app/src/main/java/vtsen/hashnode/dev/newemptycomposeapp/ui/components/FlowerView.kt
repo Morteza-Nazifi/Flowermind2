@@ -78,7 +78,12 @@ fun FlowerView() {
     ) {
 
         // مرکز گل
-        FlowerCanvas()
+        FlowerCanvas(
+            selectedPetal = selectedPetal,
+            onCenterClick = {
+                selectedPetal = null
+            }
+        )
 
         val radius = 135f * openingProgress
 
@@ -103,12 +108,12 @@ fun FlowerView() {
 
                 PetalItem(
                     petal = petal,
+
                     modifier = Modifier.size(
                         width = 96.dp,
                         height = 170.dp
                     ),
 
-                    // برای مراحل بعد
                     selected = selectedPetal == index,
 
                     onClick = {
