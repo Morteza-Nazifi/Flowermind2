@@ -82,7 +82,7 @@ fun FlowerView() {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Color(0xFF0B4F4A)
+                Color(0xFF0A5A66)
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -126,8 +126,8 @@ fun FlowerView() {
                     petal = petal,
 
                     modifier = Modifier.size(
-                        width = 96.dp,
-                        height = 170.dp
+                        width = 125.dp,
+                        height = 136.dp
                     ),
 
                     selected = selectedPetal == index,
