@@ -52,8 +52,8 @@ private val PetalShape: Shape = GenericShape { size, _ ->
 }
 
 /**
- * رنگ را به اندازه amount (بین 0 و 1)
- * به سمت سفید روشن‌تر می‌کند.
+ * روشن‌تر کردن رنگ به سمت سفید.
+ * amount بین 0 و 1 است.
  */
 private fun Color.lighten(amount: Float): Color {
 
@@ -90,15 +90,16 @@ fun PetalItem(
         label = "borderAlpha"
     )
 
+    // افزایش روشنایی گرادیان تا ۶۰٪
     val topColor =
         if (selected)
-            petal.color.lighten(0.30f)
+            petal.color.lighten(0.60f)
         else
             petal.color.copy(alpha = 0.85f)
 
     val bottomColor =
         if (selected)
-            petal.color.lighten(0.30f)
+            petal.color.lighten(0.60f)
         else
             petal.color
 
