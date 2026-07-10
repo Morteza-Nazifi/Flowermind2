@@ -3,6 +3,7 @@ package vtsen.hashnode.dev.newemptycomposeapp.ui.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -54,13 +55,20 @@ fun PetalItem(
 
     petal: Petal,
 
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+
+    selected: Boolean,
+
+    onClick: () -> Unit
 
 ) {
 
     Surface(
 
         modifier = modifier
+            .clickable {
+                onClick()
+            }
             .graphicsLayer {
 
                 shadowElevation = 16.dp.toPx()
