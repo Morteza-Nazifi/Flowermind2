@@ -1,8 +1,9 @@
 package vtsen.hashnode.dev.newemptycomposeapp.ui.components
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,9 +15,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -63,27 +64,53 @@ fun PetalItem(
 
 ) {
 
+    val scale by animateFloatAsState(
+        targetValue = if (selected) 1.10f else 1f,
+        animationSpec = tween(250),
+        label = "petalScale"
+    )
+
+    val brightness by animateFloatAsState(
+        targetValue = if (selected) 1.15f else 1f,
+        animationSpec = tween(250),
+        label = "petalBrightness"
+    )
+
+    val borderAlpha by animateFloatAsState(
+        targetValue = if (selected) 1f else 0.65f,
+        animationSpec = tween(250),
+        label = "borderAlpha"
+    )
+
     Surface(
 
         modifier = modifier
-            .clickable {
-                onClick()
-            }
             .graphicsLayer {
 
-                shadowElevation = 16.dp.toPx()
+                scaleX = scale
+                scaleY = scale
+
+                alpha = brightness
+
+                shadowElevation =
+                    if (selected)
+                        28.dp.toPx()
+                    else
+                        16.dp.toPx()
 
                 shape = PetalShape
 
                 clip = true
-
+            }
+            .clickable {
+                onClick()
             },
 
         shape = PetalShape,
 
         border = BorderStroke(
             3.dp,
-            Color.White
+            Color.White.copy(alpha = borderAlpha)
         ),
 
         color = Color.Transparent
@@ -95,19 +122,18 @@ fun PetalItem(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-
                     brush = Brush.verticalGradient(
-
                         listOf(
-
-                            petal.color.copy(alpha = 0.85f),
-
+                            petal.color.copy(
+                                alpha =
+                                    if (selected)
+                                        1f
+                                    else
+                                        0.85f
+                            ),
                             petal.color
-
                         )
-
                     )
-
                 )
                 .padding(12.dp),
 
@@ -118,27 +144,17 @@ fun PetalItem(
         ) {
 
             Icon(
-
                 imageVector = petal.icon,
-
                 contentDescription = petal.title,
-
                 tint = Color.White
-
             )
 
             Text(
-
                 text = petal.title,
-
                 color = Color.White,
-
                 style = MaterialTheme.typography.bodyMedium,
-
                 fontWeight = FontWeight.Bold,
-
                 textAlign = TextAlign.Center
-
             )
         }
     }
