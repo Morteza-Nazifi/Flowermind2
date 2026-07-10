@@ -51,6 +51,20 @@ private val PetalShape: Shape = GenericShape { size, _ ->
     close()
 }
 
+/**
+ * رنگ را به اندازه amount (بین 0 و 1)
+ * به سمت سفید روشن‌تر می‌کند.
+ */
+private fun Color.lighten(amount: Float): Color {
+
+    return Color(
+        red = red + (1f - red) * amount,
+        green = green + (1f - green) * amount,
+        blue = blue + (1f - blue) * amount,
+        alpha = alpha
+    )
+}
+
 @Composable
 fun PetalItem(
 
@@ -70,17 +84,23 @@ fun PetalItem(
         label = "petalScale"
     )
 
-    val brightness by animateFloatAsState(
-        targetValue = if (selected) 1.15f else 1f,
-        animationSpec = tween(250),
-        label = "petalBrightness"
-    )
-
     val borderAlpha by animateFloatAsState(
         targetValue = if (selected) 1f else 0.65f,
         animationSpec = tween(250),
         label = "borderAlpha"
     )
+
+    val topColor =
+        if (selected)
+            petal.color.lighten(0.30f)
+        else
+            petal.color.copy(alpha = 0.85f)
+
+    val bottomColor =
+        if (selected)
+            petal.color.lighten(0.30f)
+        else
+            petal.color
 
     Surface(
 
@@ -89,8 +109,6 @@ fun PetalItem(
 
                 scaleX = scale
                 scaleY = scale
-
-                alpha = brightness
 
                 shadowElevation =
                     if (selected)
@@ -124,14 +142,8 @@ fun PetalItem(
                 .background(
                     brush = Brush.verticalGradient(
                         listOf(
-                            petal.color.copy(
-                                alpha =
-                                    if (selected)
-                                        1f
-                                    else
-                                        0.85f
-                            ),
-                            petal.color
+                            topColor,
+                            bottomColor
                         )
                     )
                 )
