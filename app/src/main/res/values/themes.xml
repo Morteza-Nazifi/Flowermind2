@@ -1,14 +1,20 @@
-<style name="Theme.FlowerMind.Splash"
-    parent="Theme.SplashScreen">
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
 
-    <item name="windowSplashScreenBackground">@color/splash_background</item>
+    <style
+        name="Theme.FlowerMind.Splash"
+        parent="Theme.SplashScreen">
 
-    <item name="windowSplashScreenAnimatedIcon">
-        @drawable/splash_logo
-    </item>
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
 
-    <item name="postSplashScreenTheme">
-        @style/Theme.App
-    </item>
+        <item name="windowSplashScreenAnimatedIcon">
+            @drawable/splash_logo
+        </item>
 
-</style>
+        <item name="postSplashScreenTheme">
+            @style/Theme.App
+        </item>
+
+    </style>
+
+</resources>
