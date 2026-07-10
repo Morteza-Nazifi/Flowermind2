@@ -22,6 +22,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.github.vinchamp77.buildutils.BuildExt
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -99,6 +100,7 @@ fun NewEmptyComposeAppTheme(
     content: @Composable () -> Unit,
 ) {
     val useDynamicColor = BuildExt.VERSION.isDynamicColorSupported()
+
     val colorScheme =
         when {
             useDynamicColor -> {
@@ -109,14 +111,24 @@ fun NewEmptyComposeAppTheme(
                     dynamicLightColorScheme(context)
                 }
             }
+
             darkTheme -> DarkColorScheme
             else -> LightColorScheme
         }
 
     if (useSystemUIController) {
         val systemUiController = rememberSystemUiController()
-        systemUiController.setSystemBarsColor(
-            color = colorScheme.primary,
+
+        // نوار بالای سیستم
+        systemUiController.setStatusBarColor(
+            color = Color(0xFF0B5E66),
+            darkIcons = false,
+        )
+
+        // نوار پایین سیستم
+        systemUiController.setNavigationBarColor(
+            color = Color.Black,
+            darkIcons = false,
         )
     }
 
