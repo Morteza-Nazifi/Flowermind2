@@ -5,7 +5,6 @@ import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.Box
@@ -30,6 +29,11 @@ fun FlowerView() {
 
     var opened by remember {
         mutableStateOf(false)
+    }
+
+    // گلبرگ انتخاب شده
+    var selectedPetal by remember {
+        mutableStateOf<Int?>(null)
     }
 
     LaunchedEffect(Unit) {
@@ -102,7 +106,14 @@ fun FlowerView() {
                     modifier = Modifier.size(
                         width = 96.dp,
                         height = 170.dp
-                    )
+                    ),
+
+                    // برای مراحل بعد
+                    selected = selectedPetal == index,
+
+                    onClick = {
+                        selectedPetal = index
+                    }
                 )
             }
         }
