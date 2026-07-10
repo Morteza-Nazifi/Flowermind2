@@ -4,9 +4,9 @@
     <!-- تم اصلی برنامه -->
 
     <style
-        name="Theme.App"
-        parent="Theme.Material3.Light.NoActionBar" />
-
+    name="Theme.App"
+    parent="@android:style/Theme.DeviceDefault.Light.NoActionBar" />
+    
     <!-- تم Splash -->
 
     <style
