@@ -7,7 +7,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.Icon
@@ -24,6 +26,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 private val PetalShape: Shape = GenericShape { size, _ ->
@@ -53,7 +56,6 @@ private val PetalShape: Shape = GenericShape { size, _ ->
 
 /**
  * روشن‌تر کردن رنگ به سمت سفید.
- * amount بین 0 و 1 است.
  */
 private fun Color.lighten(amount: Float): Color {
 
@@ -90,7 +92,6 @@ fun PetalItem(
         label = "borderAlpha"
     )
 
-    // افزایش روشنایی گرادیان تا ۶۰٪
     val topColor =
         if (selected)
             petal.color.lighten(0.60f)
@@ -168,12 +169,18 @@ fun PetalItem(
                 tint = contentColor
             )
 
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
+
             Text(
                 text = petal.title,
                 color = contentColor,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
