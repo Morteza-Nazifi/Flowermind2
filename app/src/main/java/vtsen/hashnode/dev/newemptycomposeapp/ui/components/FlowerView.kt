@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,6 +35,11 @@ fun FlowerView() {
     // گلبرگ انتخاب شده
     var selectedPetal by remember {
         mutableStateOf<Int?>(null)
+    }
+
+    // هر بار افزایش پیدا کند موج نور دوباره اجرا می‌شود
+    var waveTrigger by remember {
+        mutableIntStateOf(0)
     }
 
     LaunchedEffect(Unit) {
@@ -80,8 +86,13 @@ fun FlowerView() {
         // مرکز گل
         FlowerCanvas(
             selectedPetal = selectedPetal,
+            waveTrigger = waveTrigger,
             onCenterClick = {
+
                 selectedPetal = null
+
+                // برای ریست نیز یک موج کوتاه اجرا می‌شود
+                waveTrigger++
             }
         )
 
@@ -96,7 +107,10 @@ fun FlowerView() {
 
             Box(
                 modifier = Modifier
-                    .offset(x = x, y = y)
+                    .offset(
+                        x = x,
+                        y = y
+                    )
                     .graphicsLayer {
 
                         rotationZ = index * 45f
@@ -107,6 +121,7 @@ fun FlowerView() {
             ) {
 
                 PetalItem(
+
                     petal = petal,
 
                     modifier = Modifier.size(
@@ -117,7 +132,11 @@ fun FlowerView() {
                     selected = selectedPetal == index,
 
                     onClick = {
+
                         selectedPetal = index
+
+                        // شروع مجدد موج نور
+                        waveTrigger++
                     }
                 )
             }
