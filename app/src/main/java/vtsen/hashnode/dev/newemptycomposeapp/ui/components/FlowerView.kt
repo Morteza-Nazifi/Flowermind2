@@ -20,9 +20,6 @@ fun FlowerView() {
         contentAlignment = Alignment.Center
     ) {
 
-        // رسم گل پس‌زمینه
-        FlowerCanvas()
-
         val radius = 135f
 
         petals.forEachIndexed { index, petal ->
