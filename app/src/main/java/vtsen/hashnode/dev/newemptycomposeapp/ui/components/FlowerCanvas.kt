@@ -49,7 +49,6 @@ fun FlowerCanvas(
         Animatable(0f)
     }
 
-    // هر بار waveTrigger تغییر کند موج از ابتدا اجرا می‌شود
     LaunchedEffect(waveTrigger) {
 
         waveProgress.snapTo(0f)
@@ -113,14 +112,14 @@ fun FlowerCanvas(
             drawCircle(
                 color = Color(
                     red = 1f,
-                    green = 0.96f,
-                    blue = 0.72f,
+                    green = 0.88f,
+                    blue = 0.18f,
                     alpha =
                         (
-                            (brightness.value + 0.02f) *
+                            (brightness.value + 0.08f) *
                                 t *
                                 t *
-                                0.28f
+                                0.34f
                             ).coerceIn(0f, 1f)
                 ),
                 radius = glowRadius * t,
@@ -128,15 +127,14 @@ fun FlowerCanvas(
             )
         }
 
-        // -------------------------
-        // موج نور به سمت گلبرگ انتخاب شده
-        // -------------------------
+        // موج نور
 
         if (selectedPetal != null) {
 
-            val angle = Math.toRadians(
-                selectedPetal * 45.0 - 90.0
-            )
+            val angle =
+                Math.toRadians(
+                    selectedPetal * 45.0 - 90.0
+                )
 
             val petalRadius = 135.dp.toPx()
 
@@ -159,10 +157,10 @@ fun FlowerCanvas(
 
             drawLine(
                 color = Color(
-                    red = 0.90f,
-                    green = 1f,
-                    blue = 0.80f,
-                    alpha = 0.65f
+                    red = 1f,
+                    green = 0.96f,
+                    blue = 0.45f,
+                    alpha = 0.75f
                 ),
                 start = center,
                 end = current,
@@ -173,35 +171,55 @@ fun FlowerCanvas(
             drawCircle(
                 color = Color(
                     red = 1f,
-                    green = 1f,
-                    blue = 0.85f,
-                    alpha = 0.95f
+                    green = 0.98f,
+                    blue = 0.60f,
+                    alpha = 1f
                 ),
                 radius = 8.dp.toPx(),
                 center = current
             )
         }
 
-        // هسته نورانی
+        // -------------------------
+        // مرکز خورشیدی
+        // -------------------------
+
+        // هاله طلایی
+
+        drawCircle(
+            color = Color(
+                red = 1f,
+                green = 0.84f,
+                blue = 0.12f,
+                alpha = 0.55f * brightness.value
+            ),
+            radius = 42.dp.toPx(),
+            center = center
+        )
+
+        // هسته خورشید
+
+        drawCircle(
+            color = Color(
+                red = 1f,
+                green = 0.92f,
+                blue = 0.20f,
+                alpha = brightness.value
+            ),
+            radius = 26.dp.toPx(),
+            center = center
+        )
+
+        // نقطه مرکزی بسیار روشن
 
         drawCircle(
             color = Color(
                 red = 1f,
                 green = 0.98f,
-                blue = 0.90f,
+                blue = 0.70f,
                 alpha = brightness.value
             ),
-            radius = 18.dp.toPx(),
-            center = center
-        )
-
-        // مرکز سفید گل
-
-        drawCircle(
-            color = Color.White.copy(
-                alpha = brightness.value
-            ),
-            radius = maxRadius,
+            radius = 13.dp.toPx(),
             center = center
         )
     }
