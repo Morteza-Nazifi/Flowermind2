@@ -1,5 +1,6 @@
 package vtsen.hashnode.dev.newemptycomposeapp.ui.components
 
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -10,12 +11,17 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import kotlin.math.cos
 import kotlin.math.hypot
+import kotlin.math.sin
 
 @Composable
 fun FlowerCanvas(
@@ -25,10 +31,9 @@ fun FlowerCanvas(
 
     val transition = rememberInfiniteTransition(label = "")
 
-    // شدت نور مرکز گل
     val brightness = transition.animateFloat(
         initialValue = 0.85f,
-        targetValue = 1.0f,
+        targetValue = 1f,
         animationSpec = infiniteRepeatable(
             animation = tween(
                 durationMillis = 3000,
@@ -38,6 +43,26 @@ fun FlowerCanvas(
         ),
         label = ""
     )
+
+    val waveProgress = remember {
+        Animatable(0f)
+    }
+
+    LaunchedEffect(selectedPetal) {
+
+        if (selectedPetal != null) {
+
+            waveProgress.snapTo(0f)
+
+            waveProgress.animateTo(
+                1f,
+                animationSpec = tween(
+                    durationMillis = 700,
+                    easing = FastOutSlowInEasing
+                )
+            )
+        }
+    }
 
     Canvas(
         modifier = Modifier
@@ -66,51 +91,95 @@ fun FlowerCanvas(
     ) {
 
         val center = Offset(
-            x = size.width / 2f,
-            y = size.height / 2f
+            size.width / 2f,
+            size.height / 2f
         )
 
         val maxRadius = 42.dp.toPx()
 
-        // شعاع انتشار نور
         val glowRadius =
-            maxRadius * (0.20f + 0.80f * ((brightness.value - 0.85f) / 0.15f))
+            maxRadius * (
+                0.20f +
+                    0.80f *
+                    ((brightness.value - 0.85f) / 0.15f)
+                )
 
-        // تعداد حلقه‌ها
         val rings = 32
 
         for (i in rings downTo 1) {
 
             val t = i / rings.toFloat()
 
-            val radius = glowRadius * t
-
-            val alpha =
-                ((brightness.value + 0.02f) * t * t * 0.28f)
-                    .coerceIn(0f, 1f)
-
             drawCircle(
                 color = Color(
                     red = 1f,
                     green = 0.96f,
                     blue = 0.72f,
-                    alpha = alpha
+                    alpha = (
+                        (brightness.value + 0.02f) *
+                            t *
+                            t *
+                            0.28f
+                        ).coerceIn(0f, 1f)
                 ),
-                radius = radius,
+                radius = glowRadius * t,
                 center = center
             )
         }
 
-        // --------
-        // رزرو برای موج نور گلبرگ
-        // --------
+        // -------------------------
+        // موج نور به سمت گلبرگ
+        // -------------------------
+
         if (selectedPetal != null) {
 
-            // در مرحله بعد مسیر نور از مرکز
-            // تا گلبرگ انتخاب شده اینجا رسم خواهد شد.
+            val angle =
+                Math.toRadians(
+                    selectedPetal * 45.0 - 90.0
+                )
+
+            val petalRadius = 135.dp.toPx()
+
+            val destination = Offset(
+                x = center.x + cos(angle).toFloat() * petalRadius,
+                y = center.y + sin(angle).toFloat() * petalRadius
+            )
+
+            val current = Offset(
+                x = center.x +
+                    (destination.x - center.x) *
+                    waveProgress.value,
+
+                y = center.y +
+                    (destination.y - center.y) *
+                    waveProgress.value
+            )
+
+            drawLine(
+                color = Color(
+                    red = 0.90f,
+                    green = 1f,
+                    blue = 0.80f,
+                    alpha = 0.65f
+                ),
+                start = center,
+                end = current,
+                strokeWidth = 7.dp.toPx(),
+                cap = StrokeCap.Round
+            )
+
+            drawCircle(
+                color = Color(
+                    red = 1f,
+                    green = 1f,
+                    blue = 0.85f,
+                    alpha = 0.95f
+                ),
+                radius = 8.dp.toPx(),
+                center = current
+            )
         }
 
-        // هسته نورانی
         drawCircle(
             color = Color(
                 red = 1f,
@@ -122,9 +191,10 @@ fun FlowerCanvas(
             center = center
         )
 
-        // مرکز سفید گل
         drawCircle(
-            color = Color.White.copy(alpha = brightness.value),
+            color = Color.White.copy(
+                alpha = brightness.value
+            ),
             radius = maxRadius,
             center = center
         )
