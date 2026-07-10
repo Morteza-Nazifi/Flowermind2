@@ -1,0 +1,16 @@
+<style name="Theme.FlowerMind.Splash"
+    parent="Theme.SplashScreen">
+
+    <item name="windowSplashScreenBackground">
+        #0B5E66
+    </item>
+
+    <item name="windowSplashScreenAnimatedIcon">
+        @drawable/splash_logo
+    </item>
+
+    <item name="postSplashScreenTheme">
+        @style/Theme.App
+    </item>
+
+</style>
