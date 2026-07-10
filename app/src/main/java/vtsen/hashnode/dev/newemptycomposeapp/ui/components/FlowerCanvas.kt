@@ -26,6 +26,7 @@ import kotlin.math.sin
 @Composable
 fun FlowerCanvas(
     selectedPetal: Int?,
+    waveTrigger: Int,
     onCenterClick: () -> Unit
 ) {
 
@@ -48,20 +49,18 @@ fun FlowerCanvas(
         Animatable(0f)
     }
 
-    LaunchedEffect(selectedPetal) {
+    // هر بار waveTrigger تغییر کند موج از ابتدا اجرا می‌شود
+    LaunchedEffect(waveTrigger) {
 
-        if (selectedPetal != null) {
+        waveProgress.snapTo(0f)
 
-            waveProgress.snapTo(0f)
-
-            waveProgress.animateTo(
-                1f,
-                animationSpec = tween(
-                    durationMillis = 700,
-                    easing = FastOutSlowInEasing
-                )
+        waveProgress.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(
+                durationMillis = 700,
+                easing = FastOutSlowInEasing
             )
-        }
+        )
     }
 
     Canvas(
@@ -98,11 +97,12 @@ fun FlowerCanvas(
         val maxRadius = 42.dp.toPx()
 
         val glowRadius =
-            maxRadius * (
-                0.20f +
-                    0.80f *
-                    ((brightness.value - 0.85f) / 0.15f)
-                )
+            maxRadius *
+                (
+                    0.20f +
+                        0.80f *
+                        ((brightness.value - 0.85f) / 0.15f)
+                    )
 
         val rings = 32
 
@@ -115,12 +115,13 @@ fun FlowerCanvas(
                     red = 1f,
                     green = 0.96f,
                     blue = 0.72f,
-                    alpha = (
-                        (brightness.value + 0.02f) *
-                            t *
-                            t *
-                            0.28f
-                        ).coerceIn(0f, 1f)
+                    alpha =
+                        (
+                            (brightness.value + 0.02f) *
+                                t *
+                                t *
+                                0.28f
+                            ).coerceIn(0f, 1f)
                 ),
                 radius = glowRadius * t,
                 center = center
@@ -128,21 +129,22 @@ fun FlowerCanvas(
         }
 
         // -------------------------
-        // موج نور به سمت گلبرگ
+        // موج نور به سمت گلبرگ انتخاب شده
         // -------------------------
 
         if (selectedPetal != null) {
 
-            val angle =
-                Math.toRadians(
-                    selectedPetal * 45.0 - 90.0
-                )
+            val angle = Math.toRadians(
+                selectedPetal * 45.0 - 90.0
+            )
 
             val petalRadius = 135.dp.toPx()
 
             val destination = Offset(
-                x = center.x + cos(angle).toFloat() * petalRadius,
-                y = center.y + sin(angle).toFloat() * petalRadius
+                x = center.x +
+                    cos(angle).toFloat() * petalRadius,
+                y = center.y +
+                    sin(angle).toFloat() * petalRadius
             )
 
             val current = Offset(
@@ -180,6 +182,8 @@ fun FlowerCanvas(
             )
         }
 
+        // هسته نورانی
+
         drawCircle(
             color = Color(
                 red = 1f,
@@ -190,6 +194,8 @@ fun FlowerCanvas(
             radius = 18.dp.toPx(),
             center = center
         )
+
+        // مرکز سفید گل
 
         drawCircle(
             color = Color.White.copy(
