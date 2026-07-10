@@ -7,6 +7,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import kotlin.math.cos
@@ -32,12 +34,10 @@ fun FlowerView() {
         mutableStateOf(false)
     }
 
-    // گلبرگ انتخاب شده
     var selectedPetal by remember {
         mutableStateOf<Int?>(null)
     }
 
-    // هر بار افزایش پیدا کند موج نور دوباره اجرا می‌شود
     var waveTrigger by remember {
         mutableIntStateOf(0)
     }
@@ -79,19 +79,18 @@ fun FlowerView() {
     )
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
 
-        // مرکز گل
         FlowerCanvas(
             selectedPetal = selectedPetal,
             waveTrigger = waveTrigger,
             onCenterClick = {
 
                 selectedPetal = null
-
-                // برای ریست نیز یک موج کوتاه اجرا می‌شود
                 waveTrigger++
             }
         )
@@ -134,8 +133,6 @@ fun FlowerView() {
                     onClick = {
 
                         selectedPetal = index
-
-                        // شروع مجدد موج نور
                         waveTrigger++
                     }
                 )
