@@ -81,7 +81,9 @@ fun FlowerView() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(
+                Color(0xFF0B4F4A)
+            ),
         contentAlignment = Alignment.Center
     ) {
 
