@@ -12,22 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.asFrameworkPaint
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun FlowerCanvas() {
 
-    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val transition = rememberInfiniteTransition(label = "")
 
-    val glowAlpha = infiniteTransition.animateFloat(
-        initialValue = 0.20f,
-        targetValue = 0.55f,
+    // شدت نور مرکز گل
+    val brightness = transition.animateFloat(
+        initialValue = 0.85f,
+        targetValue = 1.0f,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = 2200,
+                durationMillis = 3000,
                 easing = FastOutSlowInEasing
             ),
             repeatMode = RepeatMode.Reverse
@@ -44,45 +42,53 @@ fun FlowerCanvas() {
             y = size.height / 2f
         )
 
-        // هاله نور
-        drawIntoCanvas { canvas ->
+        val maxRadius = 42.dp.toPx()
 
-            val paint = Paint()
+        // شعاع انتشار نور
+        val glowRadius =
+            maxRadius * (0.20f + 0.80f * ((brightness.value - 0.85f) / 0.15f))
 
-            val frameworkPaint = paint.asFrameworkPaint().apply {
-                isAntiAlias = true
-                color = android.graphics.Color.argb(
-                    (glowAlpha.value * 255).toInt(),
-                    255,
-                    245,
-                    180
-                )
+        // تعداد حلقه‌ها
+        val rings = 32
 
-                setShadowLayer(
-                    70f,
-                    0f,
-                    0f,
-                    android.graphics.Color.argb(
-                        (glowAlpha.value * 180).toInt(),
-                        255,
-                        230,
-                        120
-                    )
-                )
-            }
+        for (i in rings downTo 1) {
 
-            canvas.nativeCanvas.drawCircle(
-                center.x,
-                center.y,
-                30.dp.toPx(),
-                frameworkPaint
+            val t = i / rings.toFloat()
+
+            val radius = glowRadius * t
+
+            val alpha =
+                ((brightness.value + 0.02f) * t * t * 0.28f)
+                    .coerceIn(0f, 1f)
+
+            drawCircle(
+                color = Color(
+                    red = 1f,
+                    green = 0.96f,
+                    blue = 0.72f,
+                    alpha = alpha
+                ),
+                radius = radius,
+                center = center
             )
         }
 
-        // مرکز گل
+        // هسته نورانی
         drawCircle(
-            color = Color.White,
-            radius = 42.dp.toPx(),
+            color = Color(
+                red = 1f,
+                green = 0.98f,
+                blue = 0.90f,
+                alpha = brightness.value
+            ),
+            radius = 18.dp.toPx(),
+            center = center
+        )
+
+        // مرکز سفید گل
+        drawCircle(
+            color = Color.White.copy(alpha = brightness.value),
+            radius = maxRadius,
             center = center
         )
     }
